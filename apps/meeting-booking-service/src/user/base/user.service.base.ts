@@ -10,7 +10,14 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, User as PrismaUser } from "@prisma/client";
+
+import {
+  Prisma,
+  User as PrismaUser,
+  Calendar as PrismaCalendar,
+  Notification as PrismaNotification,
+} from "@prisma/client";
+
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -58,5 +65,27 @@ export class UserServiceBase {
   }
   async deleteUser(args: Prisma.UserDeleteArgs): Promise<PrismaUser> {
     return this.prisma.user.delete(args);
+  }
+
+  async findCalendars(
+    parentId: string,
+    args: Prisma.CalendarFindManyArgs
+  ): Promise<PrismaCalendar[]> {
+    return this.prisma.user
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .calendars(args);
+  }
+
+  async findNotifications(
+    parentId: string,
+    args: Prisma.NotificationFindManyArgs
+  ): Promise<PrismaNotification[]> {
+    return this.prisma.user
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .notifications(args);
   }
 }
