@@ -26,6 +26,10 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { CalendarFindManyArgs } from "../../calendar/base/CalendarFindManyArgs";
+import { Calendar } from "../../calendar/base/Calendar";
+import { NotificationFindManyArgs } from "../../notification/base/NotificationFindManyArgs";
+import { Notification } from "../../notification/base/Notification";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -130,5 +134,45 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Calendar], { name: "calendars" })
+  @nestAccessControl.UseRoles({
+    resource: "Calendar",
+    action: "read",
+    possession: "any",
+  })
+  async findCalendars(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: CalendarFindManyArgs
+  ): Promise<Calendar[]> {
+    const results = await this.service.findCalendars(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Notification], { name: "notifications" })
+  @nestAccessControl.UseRoles({
+    resource: "Notification",
+    action: "read",
+    possession: "any",
+  })
+  async findNotifications(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: NotificationFindManyArgs
+  ): Promise<Notification[]> {
+    const results = await this.service.findNotifications(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }

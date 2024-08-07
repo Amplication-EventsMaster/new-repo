@@ -1,5 +1,8 @@
 import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
+import { NotificationModule } from "./notification/notification.module";
+import { CalendarModule } from "./calendar/calendar.module";
+import { AppointmentModule } from "./appointment/appointment.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -18,6 +21,9 @@ import { AuthModule } from "./auth/auth.module";
     ACLModule,
     AuthModule,
     UserModule,
+    NotificationModule,
+    CalendarModule,
+    AppointmentModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

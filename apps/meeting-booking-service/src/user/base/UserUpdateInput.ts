@@ -11,13 +11,33 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, MaxLength } from "class-validator";
+import { CalendarUpdateManyWithoutUsersInput } from "./CalendarUpdateManyWithoutUsersInput";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from "class-validator";
+import { Type } from "class-transformer";
+import { NotificationUpdateManyWithoutUsersInput } from "./NotificationUpdateManyWithoutUsersInput";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: () => CalendarUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => CalendarUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => CalendarUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  calendars?: CalendarUpdateManyWithoutUsersInput;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -52,6 +72,18 @@ class UserUpdateInput {
     nullable: true,
   })
   lastName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => NotificationUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => NotificationUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => NotificationUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  notifications?: NotificationUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,

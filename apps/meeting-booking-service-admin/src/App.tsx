@@ -9,6 +9,18 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+import { NotificationList } from "./notification/NotificationList";
+import { NotificationCreate } from "./notification/NotificationCreate";
+import { NotificationEdit } from "./notification/NotificationEdit";
+import { NotificationShow } from "./notification/NotificationShow";
+import { CalendarList } from "./calendar/CalendarList";
+import { CalendarCreate } from "./calendar/CalendarCreate";
+import { CalendarEdit } from "./calendar/CalendarEdit";
+import { CalendarShow } from "./calendar/CalendarShow";
+import { AppointmentList } from "./appointment/AppointmentList";
+import { AppointmentCreate } from "./appointment/AppointmentCreate";
+import { AppointmentEdit } from "./appointment/AppointmentEdit";
+import { AppointmentShow } from "./appointment/AppointmentShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -41,6 +53,27 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+        />
+        <Resource
+          name="Notification"
+          list={NotificationList}
+          edit={NotificationEdit}
+          create={NotificationCreate}
+          show={NotificationShow}
+        />
+        <Resource
+          name="Calendar"
+          list={CalendarList}
+          edit={CalendarEdit}
+          create={CalendarCreate}
+          show={CalendarShow}
+        />
+        <Resource
+          name="Appointment"
+          list={AppointmentList}
+          edit={AppointmentEdit}
+          create={AppointmentCreate}
+          show={AppointmentShow}
         />
       </Admin>
     </div>
